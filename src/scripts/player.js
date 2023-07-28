@@ -9,3 +9,5 @@ class Player {
     gameboard.receiveAttack(x, y);
   }
 }
+
+export default Player;

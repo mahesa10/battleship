@@ -8,13 +8,21 @@ class Gameboard {
   placeShip(ship, coordinate) {
     let x = coordinate[0];
     let y = coordinate[1];
+    let isEmpty = true;
 
+    for (let i = 0; i < ship.length; i++) {
+      if (this.board[x][y] !== null) isEmpty = false;
+    }
+
+    if (isEmpty === false && (y + ship.length - 1) > 9) return;
+
+    this.ships.push(ship);
+    
     for (let i = 0; i < ship.length; i++) {
       this.board[x][y] = ship.type;
       y++
     }
 
-    this.ships.push(ship);
   }
 
   receiveAttack(x, y) {

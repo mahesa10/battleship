@@ -5,24 +5,44 @@ class Gameboard {
     this.missed = [];
   }
 
-  placeShip(ship, coordinate) {
+  placeShip(ship, coordinate, axis = 'x') {
     let x = coordinate[0];
     let y = coordinate[1];
-    let isEmpty = true;
 
-    for (let i = 0; i < ship.length; i++) {
-      if (this.board[x][y] !== null) isEmpty = false;
+    //Return if the coordinate is beyond the board and not empty
+    if (axis === 'x') {
+      if ((y + ship.length - 1) > 9) return;
+
+      let tempY = y;
+      for (let i = 0; i < ship.length; i++) {
+        if (this.board[x][tempY] !== null) return;
+        tempY++
+      }
+    } else {
+      if ((x + ship.length - 1) > 9) return;
+
+      let tempX = x;
+      for (let i = 0; i < ship.length; i++) {
+        if (this.board[tempX][y] !== null) return;
+        tempX++
+      }
     }
 
-    if (isEmpty === false && (y + ship.length - 1) > 9) return;
 
-    this.ships.push(ship);
+    //Place the ships according to the axis
+    if (axis === 'x') {
+      for (let i = 0; i < ship.length; i++) {
+        this.board[x][y] = ship.type;
+        y++
+      }
+    } else {
+      for (let i = 0; i < ship.length; i++) {
+        this.board[x][y] = ship.type;
+        x++
+      }
+    }
     
-    for (let i = 0; i < ship.length; i++) {
-      this.board[x][y] = ship.type;
-      y++
-    }
-
+    this.ships.push(ship);
   }
 
   receiveAttack(x, y) {

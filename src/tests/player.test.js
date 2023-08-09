@@ -1,6 +1,6 @@
-import Player from "../scripts/player";
-import Gameboard from "../scripts/gameboard";
-import Ship from "../scripts/ship";
+import Player from "../modules/player";
+import Gameboard from "../modules/gameboard";
+import Ship from "../modules/ship";
 
 const player1 = new Player('Player 1');
 const gameboard = new Gameboard();

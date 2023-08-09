@@ -1,4 +1,4 @@
-import Ship from "../scripts/ship.js";
+import Ship from "../modules/ship.js";
 
 const ship1 = new Ship('Cruiser', 3);
 

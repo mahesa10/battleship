@@ -6,7 +6,31 @@
   <title>Battleship | mahesa10</title>
 </head>
 <body>
-  <h1 class="text-5xl">BATTLESHIP</h1>
+  <div id="wrapper" class="h-screen flex flex-col">
+    <h1 class="text-5xl text-center my-7">BATTLESHIP</h1>
+
+    <div class="flex m-auto border border-solid border-black py-3 px-5">
+      <h2 class="info-text text-2xl">Place your ships</h2>
+    </div>
+
+    <div class="main-container flex flex-row justify-center flex-grow items-center gap-11">
+      <div class="player-container flex flex-col items-center gap-3">
+        <div class="player1-board h-72 w-72 border border-solid border-black"></div>
+        <p class="text-xl">Your Board</p>
+      </div>
+
+      <button class="px-4 py-2 border border-solid border-black">START GAME</button>
+
+      <div class="player-container flex flex-col items-center gap-3">
+        <div class="player2-board h-72 w-72 border border-solid border-black"></div>
+        <p class="text-xl">Computer Board</p>
+      </div>
+    </div>
+
+    <div class="footer bg-gray-400 h-14 flex items-center justify-center">
+      <p class="text-lg">Coded by: mahesa10</p>
+    </div>
+  </div>
   <script src="bundle.js"></script>
 </body>
 </html>

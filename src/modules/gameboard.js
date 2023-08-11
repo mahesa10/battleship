@@ -1,20 +1,7 @@
 class Gameboard {
   constructor() {
-    this.board = this.createBoard();
+    this.board = Array(10).fill().map(() => Array(10).fill().map(() => ({ shipType: null, isAttacked: false })));
     this.ships = [];
-    this.missed = [];
-  }
-
-  createBoard() {
-    let board = [];
-    for (let x = 0; x < 10; x++) {
-      board[x] = [];
-      for (let y = 0; y < 10; y++) {
-        board[x][y] = { shipType: null, isAttacked: false };
-      }
-    }
-
-    return board;
   }
 
   placeShip(ship, coordinate, axis = 'x') {

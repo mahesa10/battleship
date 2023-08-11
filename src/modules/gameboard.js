@@ -1,8 +1,20 @@
 class Gameboard {
   constructor() {
-    this.board = Array.from(Array(10), () => Array(10).fill(null));
+    this.board = this.createBoard();
     this.ships = [];
     this.missed = [];
+  }
+
+  createBoard() {
+    let board = [];
+    for (let x = 0; x < 10; x++) {
+      board[x] = [];
+      for (let y = 0; y < 10; y++) {
+        board[x][y] = { shipType: null, isAttacked: false };
+      }
+    }
+
+    return board;
   }
 
   placeShip(ship, coordinate, axis = 'x') {
@@ -15,7 +27,7 @@ class Gameboard {
 
       let tempY = y;
       for (let i = 0; i < ship.length; i++) {
-        if (this.board[x][tempY] !== null) return;
+        if (this.board[x][tempY].shipType !== null) return;
         tempY++
       }
     } else {
@@ -23,7 +35,7 @@ class Gameboard {
 
       let tempX = x;
       for (let i = 0; i < ship.length; i++) {
-        if (this.board[tempX][y] !== null) return;
+        if (this.board[tempX][y].shipType !== null) return;
         tempX++
       }
     }
@@ -32,12 +44,12 @@ class Gameboard {
     //Place the ships according to the axis
     if (axis === 'x') {
       for (let i = 0; i < ship.length; i++) {
-        this.board[x][y] = ship.type;
+        this.board[x][y].shipType = ship.type;
         y++
       }
-    } else {
+    } else if (axis === 'y') {
       for (let i = 0; i < ship.length; i++) {
-        this.board[x][y] = ship.type;
+        this.board[x][y].shipType = ship.type;
         x++
       }
     }
@@ -46,8 +58,8 @@ class Gameboard {
   }
 
   receiveAttack(x, y) {
-    if (this.board[x][y] !== null) {
-      let attackedShip = this.ships.find(ship => ship.type === this.board[x][y]);
+    if (this.board[x][y].shipType !== null) {
+      let attackedShip = this.ships.find(ship => ship.type === this.board[x][y].shipType);
       attackedShip.hit();
     } else {
       this.missed.push([x, y]);

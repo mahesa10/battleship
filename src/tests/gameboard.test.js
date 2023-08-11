@@ -6,27 +6,32 @@ const ship = new Ship('Destroyer', 3);
 const ship2 = new Ship('Patrol Boat', 2);
 const ship3 = new Ship('Battleship', 4);
 
-describe.only('Place Ship', () => {
+describe('Place Ship', () => {
   test('Ship is placed on the coordinate', () => {
     gameboard.placeShip(ship, [4, 5], 'y');
     gameboard.placeShip(ship, [0, 5]);
-    expect(gameboard.board[4][5]).not.toBe(null);
-    expect(gameboard.board[5][5]).not.toBe(null);
-    expect(gameboard.board[6][5]).not.toBe(null);
-  
-    expect(gameboard.board[0][5]).not.toBe(null);
-    expect(gameboard.board[0][6]).not.toBe(null);
-    expect(gameboard.board[0][7]).not.toBe(null);    
+    expect(gameboard.board[3][5].shipType).toBe(null);
+    expect(gameboard.board[4][5].shipType).not.toBe(null);
+    expect(gameboard.board[4][3].shipType).toBe(null);
+    expect(gameboard.board[5][5].shipType).not.toBe(null);
+    expect(gameboard.board[6][5].shipType).not.toBe(null);
+    expect(gameboard.board[7][5].shipType).toBe(null);
+    
+    expect(gameboard.board[0][4].shipType).toBe(null);
+    expect(gameboard.board[0][5].shipType).not.toBe(null);
+    expect(gameboard.board[0][6].shipType).not.toBe(null);
+    expect(gameboard.board[0][7].shipType).not.toBe(null);    
+    expect(gameboard.board[0][8].shipType).toBe(null);    
   })
   
   test('Coordinate is beyond the board', () => {
     gameboard.placeShip(ship, [8, 5], 'y');
-    expect(gameboard.board[8][5]).toBe(null);    
+    expect(gameboard.board[8][5].shipType).toBe(null);    
   })
 
   test('Coordinate is not empty', () => {
     gameboard.placeShip(ship, [6, 4]);
-    expect(gameboard.board[6][4]).toBe(null);
+    expect(gameboard.board[6][4].shipType).toBe(null);
   })
 })
 

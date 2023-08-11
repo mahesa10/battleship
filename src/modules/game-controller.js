@@ -20,4 +20,24 @@ const player1PlaceShip = () => {
   player1Board.placeShip(player1Ships[4], [8, 3])
 }
 
-export { player1PlaceShip }
+const getRandomCoordinate = () => {
+  let x = Math.floor(Math.random() * 10);
+  let y = Math.floor(Math.random() * 10);
+
+  return [x, y];
+}
+
+const getRandomAxis = () => {
+  return Math.random() < 0.5 ? 'x' : 'y';
+}
+
+const computerPlaceShip = () => {
+  player2Ships.forEach(ship => {
+    let shipPlaced = player2Board.placeShip(ship, getRandomCoordinate(), getRandomAxis());
+    while (!shipPlaced) {
+      shipPlaced = player2Board.placeShip(ship, getRandomCoordinate(), getRandomAxis());
+    }
+  })
+}
+
+export { player1, player2, player1Board, player2Board, player1PlaceShip, computerPlaceShip}

@@ -10,19 +10,19 @@ class Gameboard {
 
     //Return if the coordinate is beyond the board and not empty
     if (axis === 'x') {
-      if ((y + ship.length - 1) > 9) return;
+      if ((y + ship.length - 1) > 9) return false;
 
       let tempY = y;
       for (let i = 0; i < ship.length; i++) {
-        if (this.board[x][tempY].shipType !== null) return;
+        if (this.board[x][tempY].shipType !== null) return false;
         tempY++
       }
     } else {
-      if ((x + ship.length - 1) > 9) return;
+      if ((x + ship.length - 1) > 9) return false;
 
       let tempX = x;
       for (let i = 0; i < ship.length; i++) {
-        if (this.board[tempX][y].shipType !== null) return;
+        if (this.board[tempX][y].shipType !== null) return false;
         tempX++
       }
     }
@@ -42,6 +42,8 @@ class Gameboard {
     }
     
     this.ships.push(ship);
+
+    return true;
   }
 
   receiveAttack(x, y) {

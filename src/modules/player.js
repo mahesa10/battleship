@@ -13,8 +13,8 @@ class Player {
     let x = Math.floor(Math.random() * 10);
     let y = Math.floor(Math.random() * 10);
 
-    if (!this.attack([x, y], gameboard)) this.randomAttack();
-    else this.attack([x, y], gameboard);
+    let attacked = gameboard.receiveAttack(x, y);
+    if (!attacked) this.randomAttack(gameboard);
   }
 }
 

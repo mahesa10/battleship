@@ -126,7 +126,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _sty
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   displayBoardGrid: () => (/* binding */ displayBoardGrid)\n/* harmony export */ });\nconst boards = document.querySelectorAll('.board');\n\nconst displayBoardGrid = () => {\n  boards.forEach(item => {\n    for (let i = 0; i < 100; i++) {\n      const boardGrid = document.createElement('div');\n      boardGrid.className = 'border border-solid border-black';\n      item.appendChild(boardGrid);\n    }\n  })\n}\n\n\n\n//# sourceURL=webpack://battleship/./src/modules/DOM.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   displayBoardGrid: () => (/* binding */ displayBoardGrid)\n/* harmony export */ });\nconst boards = document.querySelectorAll('.board');\n\nconst displayBoardGrid = () => {\n  boards.forEach(item => {\n    for (let x = 0; x < 10; x++) {\n      for (let y = 0; y < 10; y++) {\n        const boardGrid = document.createElement('div');\n        boardGrid.className = 'border border-solid border-black';\n        boardGrid.setAttribute('data-row', x);\n        boardGrid.setAttribute('data-col', y);\n        item.appendChild(boardGrid);\n      }\n    }\n  })\n}\n\n\n\n//# sourceURL=webpack://battleship/./src/modules/DOM.js?");
 
 /***/ })
 

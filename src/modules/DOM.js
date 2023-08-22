@@ -22,7 +22,6 @@ const displayBoardGrid = (player) => {
       let x = Number(e.target.dataset.row)
       let y = Number(e.target.dataset.col)
       player2Board.receiveAttack(x, y);
-      console.log('success')
     })
   }
 }

@@ -52,8 +52,6 @@ class Gameboard {
     if (this.board[x][y].shipType !== null) {
       let attackedShip = this.ships.find(ship => ship.type === this.board[x][y].shipType);
       attackedShip.hit();
-    } else {
-      this.missed.push([x, y]);
     }
   }
 

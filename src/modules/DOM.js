@@ -17,15 +17,16 @@ const displayBoardGrid = () => {
     }
   })
 
-  player2Board.addEventListener('click', (e) => {
+  p2BoardDiv.addEventListener('click', (e) => {
     let x = Number(e.target.dataset.row)
     let y = Number(e.target.dataset.col)
     player2Board.receiveAttack(x, y);
   })
 }
 
-const displayShip = (player, gameboard) => {
-  let boardToDisplay = player.name === 'Player 1' ? p1BoardDiv : p2BoardDiv;
+const displayPlayerShip = () => {
+  let boardToDisplay = p1BoardDiv;
+  let gameboard = player1Board;
 
   for (let x = 0; x < gameboard.board.length; x++) {
     for (let y = 0; y < gameboard.board.length; y++) {
@@ -37,4 +38,18 @@ const displayShip = (player, gameboard) => {
   }
 }
 
-export { displayBoardGrid, displayShip }
+const displayComputerShip = () => {
+  let boardToDisplay = p2BoardDiv;
+  let gameboard = player2Board;
+
+  for (let x = 0; x < gameboard.board.length; x++) {
+    for (let y = 0; y < gameboard.board.length; y++) {
+      if (gameboard.board[x][y].shipType !== null) {
+        const coordinateDisplay = boardToDisplay.querySelector(`[data-row="${x}"][data-col="${y}"]`)
+        coordinateDisplay.className += ' bg-gray-300'
+      }
+    }
+  }
+}
+
+export { displayBoardGrid, displayPlayerShip, displayComputerShip }

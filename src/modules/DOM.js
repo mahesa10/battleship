@@ -4,24 +4,27 @@ const boards = document.querySelectorAll('.board');
 const p1BoardDiv = document.querySelector('.player1-board');
 const p2BoardDiv = document.querySelector('.player2-board');
 
-const displayBoardGrid = () => {
-  boards.forEach(item => {
-    for (let x = 0; x < 10; x++) {
-      for (let y = 0; y < 10; y++) {
-        const boardGrid = document.createElement('div');
-        boardGrid.className = 'border border-solid border-black';
-        boardGrid.setAttribute('data-row', x);
-        boardGrid.setAttribute('data-col', y);
-        item.appendChild(boardGrid);
-      }
-    }
-  })
+const displayBoardGrid = (player) => {
+  let boardDiv = player.name === 'Player 1'? p1BoardDiv : p2BoardDiv;
 
-  p2BoardDiv.addEventListener('click', (e) => {
-    let x = Number(e.target.dataset.row)
-    let y = Number(e.target.dataset.col)
-    player2Board.receiveAttack(x, y);
-  })
+  for (let x = 0; x < 10; x++) {
+    for (let y = 0; y < 10; y++) {
+      const boardGrid = document.createElement('div');
+      boardGrid.className = 'border border-solid border-black';
+      boardGrid.setAttribute('data-row', x);
+      boardGrid.setAttribute('data-col', y);
+      boardDiv.appendChild(boardGrid);
+    }
+  }
+
+  if (player.name === 'Computer') {
+    boardDiv.addEventListener('click', (e) => {
+      let x = Number(e.target.dataset.row)
+      let y = Number(e.target.dataset.col)
+      player2Board.receiveAttack(x, y);
+      console.log('success')
+    })
+  }
 }
 
 const displayPlayerShip = () => {

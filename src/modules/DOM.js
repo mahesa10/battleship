@@ -10,7 +10,11 @@ const displayBoardGrid = (player) => {
   for (let x = 0; x < 10; x++) {
     for (let y = 0; y < 10; y++) {
       const boardGrid = document.createElement('div');
-      boardGrid.className = 'border border-solid border-black';
+      if (player.name === 'Computer') {
+        boardGrid.className = 'border border-solid border-black hover:bg-sky-200';
+      } else {
+        boardGrid.className = 'border border-solid border-black';
+      }
       boardGrid.setAttribute('data-row', x);
       boardGrid.setAttribute('data-col', y);
       boardDiv.appendChild(boardGrid);

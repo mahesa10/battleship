@@ -1,6 +1,8 @@
+import { player1Board, player2Board } from "./game-controller";
+
 const boards = document.querySelectorAll('.board');
-const player1Board = document.querySelector('.player1-board');
-const player2Board = document.querySelector('.player2-board');
+const p1BoardDiv = document.querySelector('.player1-board');
+const p2BoardDiv = document.querySelector('.player2-board');
 
 const displayBoardGrid = () => {
   boards.forEach(item => {
@@ -14,10 +16,16 @@ const displayBoardGrid = () => {
       }
     }
   })
+
+  player2Board.addEventListener('click', (e) => {
+    let x = Number(e.target.dataset.row)
+    let y = Number(e.target.dataset.col)
+    player2Board.receiveAttack(x, y);
+  })
 }
 
 const displayShip = (player, gameboard) => {
-  let boardToDisplay = player.name === 'Player 1' ? player1Board : player2Board;
+  let boardToDisplay = player.name === 'Player 1' ? p1BoardDiv : p2BoardDiv;
 
   for (let x = 0; x < gameboard.board.length; x++) {
     for (let y = 0; y < gameboard.board.length; y++) {

@@ -20,12 +20,14 @@ const displayBoardGrid = (player) => {
       
       if (player.name === 'Computer') {
         boardGrid.addEventListener('click', () => {
-          if (player2Board.board[x][y].isAttacked) return;
-    
+          if (player2Board.board[x][y].isAttacked || checkWinner()) return;
+          
           let attackStatus = player2Board.receiveAttack(x, y);
           displayAttackedCoordinate(boardDiv, [x, y], attackStatus);
           let winner = checkWinner();
-          if(winner) displayWinner(winner);
+          if (winner) {
+            displayWinner(winner)
+          };
         })
       }
 

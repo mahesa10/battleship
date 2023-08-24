@@ -3,6 +3,7 @@ import { player1Board, player2Board, checkWinner } from "./game-controller";
 const p1BoardDiv = document.querySelector('.player1-board');
 const p2BoardDiv = document.querySelector('.player2-board');
 const infoText = document.querySelector('.info-text');
+const startButton = document.querySelector('.start-button')
 
 const displayBoardGrid = (player) => {
   let boardDiv = player.name === 'Player 1'? p1BoardDiv : p2BoardDiv;
@@ -67,5 +68,13 @@ const displayWinner = (winner) => {
   if (winner === 'Player') infoText.innerText = 'You Win !';
   else if (winner === 'Computer') infoText.innerText = 'Computer Win';
 }
+
+const startGame = () => {
+  p2BoardDiv.classList.remove('pointer-events-none', 'opacity-30');
+}
+
+(function() {
+  startButton.addEventListener('click', () => { startGame() });
+})();
 
 export { displayBoardGrid, displayPlayerShip }

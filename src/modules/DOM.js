@@ -45,20 +45,6 @@ const displayPlayerShip = () => {
   }
 }
 
-const displayComputerShip = () => {
-  let boardToDisplay = p2BoardDiv;
-  let gameboard = player2Board;
-
-  for (let x = 0; x < gameboard.board.length; x++) {
-    for (let y = 0; y < gameboard.board.length; y++) {
-      if (gameboard.board[x][y].shipType !== null) {
-        const coordinateDisplay = boardToDisplay.querySelector(`[data-row="${x}"][data-col="${y}"]`)
-        coordinateDisplay.className += ' bg-gray-300'
-      }
-    }
-  }
-}
-
 const displayAttackedCoordinate = (boardDiv, coordinate, attackStatus) => {
   let [x, y] = [...coordinate]
   let coordinateDiv = boardDiv.querySelector(`[data-row="${x}"][data-col="${y}"]`);
@@ -71,4 +57,4 @@ const displayAttackedCoordinate = (boardDiv, coordinate, attackStatus) => {
   }
 }
 
-export { displayBoardGrid, displayPlayerShip, displayComputerShip }
+export { displayBoardGrid, displayPlayerShip }

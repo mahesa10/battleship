@@ -11,9 +11,9 @@ const displayBoardGrid = (player) => {
     for (let y = 0; y < 10; y++) {
       const boardGrid = document.createElement('div');
       if (player.name === 'Computer') {
-        boardGrid.className = 'border border-solid border-black hover:bg-sky-200';
+        boardGrid.className = 'flex justify-center items-center border border-solid border-black hover:bg-sky-200';
       } else {
-        boardGrid.className = 'border border-solid border-black';
+        boardGrid.className = 'flex justify-center items-center border border-solid border-black';
       }
       boardGrid.setAttribute('data-row', x);
       boardGrid.setAttribute('data-col', y);
@@ -25,7 +25,8 @@ const displayBoardGrid = (player) => {
     boardDiv.addEventListener('click', (e) => {
       let x = Number(e.target.dataset.row)
       let y = Number(e.target.dataset.col)
-      player2Board.receiveAttack(x, y);
+      let attackStatus = player2Board.receiveAttack(x, y);
+      displayAttackedCoordinate(boardDiv, [x, y], attackStatus);
     })
   }
 }
@@ -55,6 +56,18 @@ const displayComputerShip = () => {
         coordinateDisplay.className += ' bg-gray-300'
       }
     }
+  }
+}
+
+const displayAttackedCoordinate = (boardDiv, coordinate, attackStatus) => {
+  let [x, y] = [...coordinate]
+  let coordinateDiv = boardDiv.querySelector(`[data-row="${x}"][data-col="${y}"]`);
+  let bulletDiv = document.createElement('div');
+  bulletDiv.className = 'h-3/6 w-3/6 rounded-full bg-black';
+  coordinateDiv.appendChild(bulletDiv);
+
+  if (attackStatus === 'hit'){
+    coordinateDiv.classList.add('bg-red-400')
   }
 }
 

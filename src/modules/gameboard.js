@@ -52,7 +52,11 @@ class Gameboard {
     if (this.board[x][y].shipType !== null) {
       let attackedShip = this.ships.find(ship => ship.type === this.board[x][y].shipType);
       attackedShip.hit();
+      return 'hit';
     }
+
+    this.board[x][y].isAttacked = true;
+    return 'miss'
   }
 
   isAllShipsSunk() {

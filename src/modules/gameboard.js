@@ -48,6 +48,8 @@ class Gameboard {
 
   receiveAttack(x, y) {
     if (this.board[x][y].isAttacked) return false;
+    
+    this.board[x][y].isAttacked = true;
 
     if (this.board[x][y].shipType !== null) {
       let attackedShip = this.ships.find(ship => ship.type === this.board[x][y].shipType);
@@ -55,7 +57,6 @@ class Gameboard {
       return 'hit';
     }
 
-    this.board[x][y].isAttacked = true;
     return 'miss'
   }
 

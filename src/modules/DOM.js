@@ -17,20 +17,22 @@ const displayBoardGrid = (player) => {
       }
       boardGrid.setAttribute('data-row', x);
       boardGrid.setAttribute('data-col', y);
+      
+      if (player.name === 'Computer') {
+        boardGrid.addEventListener('click', () => {
+          if (player2Board.board[x][y].isAttacked) return;
+    
+          let attackStatus = player2Board.receiveAttack(x, y);
+          displayAttackedCoordinate(boardDiv, [x, y], attackStatus);
+          let winner = checkWinner();
+          if(winner) displayWinner(winner);
+        })
+      }
+
       boardDiv.appendChild(boardGrid);
     }
   }
 
-  if (player.name === 'Computer') {
-    boardDiv.addEventListener('click', (e) => {
-      let x = Number(e.target.dataset.row)
-      let y = Number(e.target.dataset.col)
-      let attackStatus = player2Board.receiveAttack(x, y);
-      displayAttackedCoordinate(boardDiv, [x, y], attackStatus);
-      let winner = checkWinner();
-      if(winner) displayWinner(winner);
-    })
-  }
 }
 
 const displayPlayerShip = () => {

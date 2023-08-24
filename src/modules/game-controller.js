@@ -40,4 +40,9 @@ const computerPlaceShip = () => {
   })
 }
 
-export { player1, player2, player1Board, player2Board, player1PlaceShip, computerPlaceShip}
+const checkWinner = () => {
+  if (player1Board.isAllShipsSunk()) return 'Computer';
+  else if (player2Board.isAllShipsSunk()) return 'Player';
+}
+
+export { player1, player2, player1Board, player2Board, player1PlaceShip, computerPlaceShip, checkWinner }

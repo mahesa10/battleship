@@ -1,8 +1,8 @@
-import { player1Board, player2Board } from "./game-controller";
+import { player1Board, player2Board, checkWinner } from "./game-controller";
 
-const boards = document.querySelectorAll('.board');
 const p1BoardDiv = document.querySelector('.player1-board');
 const p2BoardDiv = document.querySelector('.player2-board');
+const infoText = document.querySelector('.info-text');
 
 const displayBoardGrid = (player) => {
   let boardDiv = player.name === 'Player 1'? p1BoardDiv : p2BoardDiv;
@@ -27,6 +27,8 @@ const displayBoardGrid = (player) => {
       let y = Number(e.target.dataset.col)
       let attackStatus = player2Board.receiveAttack(x, y);
       displayAttackedCoordinate(boardDiv, [x, y], attackStatus);
+      let winner = checkWinner();
+      if(winner) displayWinner(winner);
     })
   }
 }
@@ -55,6 +57,11 @@ const displayAttackedCoordinate = (boardDiv, coordinate, attackStatus) => {
   if (attackStatus === 'hit'){
     coordinateDiv.classList.add('bg-red-400')
   }
+}
+
+const displayWinner = (winner) => {
+  if (winner === 'Player') infoText.innerText = 'You Win !';
+  else if (winner === 'Computer') infoText.innerText = 'Computer Win';
 }
 
 export { displayBoardGrid, displayPlayerShip }

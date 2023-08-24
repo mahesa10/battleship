@@ -1,9 +1,10 @@
-import { player1Board, player2Board, checkWinner } from "./game-controller";
+import { player1, player2, player1Board, player2Board, checkWinner, player1PlaceShip, computerPlaceShip } from "./game-controller";
 
 const p1BoardDiv = document.querySelector('.player1-board');
 const p2BoardDiv = document.querySelector('.player2-board');
 const infoText = document.querySelector('.info-text');
-const startButton = document.querySelector('.start-button')
+const startButton = document.querySelector('.start-button');
+const resetButton = document.querySelector('.reset-button');
 
 const displayBoardGrid = (player) => {
   let boardDiv = player.name === 'Player 1'? p1BoardDiv : p2BoardDiv;
@@ -27,7 +28,9 @@ const displayBoardGrid = (player) => {
           displayAttackedCoordinate(boardDiv, [x, y], attackStatus);
           let winner = checkWinner();
           if (winner) {
-            displayWinner(winner)
+            displayWinner(winner);
+            hideButton(startButton);
+            showButton(resetButton);
           };
         })
       }
@@ -71,10 +74,41 @@ const displayWinner = (winner) => {
 
 const startGame = () => {
   p2BoardDiv.classList.remove('pointer-events-none', 'opacity-30');
+  startButton.disabled = true;
+}
+
+const resetGame = () => {
+  p1BoardDiv.innerHTML = '';
+  p2BoardDiv.innerHTML = '';
+  displayBoardGrid(player1);
+  displayBoardGrid(player2);
+  player1PlaceShip();
+  displayPlayerShip();
+  computerPlaceShip();
+  showButton(startButton);
+  hideButton(resetButton);
+  disableComputerBoard();
+}
+
+const hideButton = (btn) => {
+  btn.classList.add('hidden');
+}
+
+const showButton = (btn) => {
+  btn.classList.remove('hidden');
+  if (btn.disabled) btn.disabled = false;
+}
+
+const disableComputerBoard = () => {
+  p2BoardDiv.classList.add('pointer-events-none', 'opacity-30');
 }
 
 (function() {
   startButton.addEventListener('click', () => { startGame() });
+})();
+
+(function() {
+  resetButton.addEventListener('click', () => { resetGame() });
 })();
 
 export { displayBoardGrid, displayPlayerShip }

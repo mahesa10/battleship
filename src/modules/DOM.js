@@ -1,4 +1,4 @@
-import { player1, player2, player1Board, player2Board, checkWinner, player1PlaceShip, computerPlaceShip } from "./game-controller";
+import { player1, player2, player1Board, player2Board, checkWinner, player1PlaceShip, computerPlaceShip, getRandomCoordinate } from "./game-controller";
 
 const p1BoardDiv = document.querySelector('.player1-board');
 const p2BoardDiv = document.querySelector('.player2-board');
@@ -22,16 +22,8 @@ const displayBoardGrid = (player) => {
       
       if (player.name === 'Computer') {
         boardGrid.addEventListener('click', () => {
-          if (player2Board.board[x][y].isAttacked || checkWinner()) return;
-          
-          let attackStatus = player2Board.receiveAttack(x, y);
-          displayAttackedCoordinate(boardDiv, [x, y], attackStatus);
-          let winner = checkWinner();
-          if (winner) {
-            displayWinner(winner);
-            hideButton(startButton);
-            showButton(resetButton);
-          };
+          attackShipDOM(player1, [x, y]);
+          attackShipDOM(player2);
         })
       }
 
@@ -65,6 +57,40 @@ const displayAttackedCoordinate = (boardDiv, coordinate, attackStatus) => {
   if (attackStatus === 'hit'){
     coordinateDiv.classList.add('bg-red-400')
   }
+
+  coordinateDiv.classList.add('pointer-events-none')
+}
+
+const attackShipDOM = (player, coordinate = null) => {
+  let [x, y] = coordinate ? coordinate : [null, null];
+  let boardDiv, attackedBoard;
+
+  if (player.name === 'Player 1') {
+    boardDiv = p2BoardDiv;
+    attackedBoard = player2Board;
+  } else if (player.name === 'Computer') {
+    boardDiv = p1BoardDiv;
+    attackedBoard = player1Board;
+  }
+
+  if (checkWinner()) return;
+          
+  let attackStatus;
+  if (player.name === 'Player 1') {
+    attackStatus = player.attack([x, y], attackedBoard);
+  } else if (player.name === 'Computer') {
+    let comAttack = player.randomAttack(attackedBoard);
+    attackStatus = comAttack.attackStatus;
+    [x, y] = comAttack.coordinate;
+  }
+
+  displayAttackedCoordinate(boardDiv, [x, y], attackStatus);
+  let winner = checkWinner();
+  if (winner) {
+    displayWinner(winner);
+    hideButton(startButton);
+    showButton(resetButton);
+  };
 }
 
 const displayWinner = (winner) => {

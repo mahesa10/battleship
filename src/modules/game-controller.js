@@ -45,4 +45,4 @@ const checkWinner = () => {
   else if (player2Board.isAllShipsSunk()) return 'Player';
 }
 
-export { player1, player2, player1Board, player2Board, player1PlaceShip, computerPlaceShip, checkWinner }
+export { player1, player2, player1Board, player2Board, player1PlaceShip, computerPlaceShip, checkWinner, getRandomCoordinate }

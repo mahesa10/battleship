@@ -6,15 +6,20 @@ class Player {
   attack(coordinate, gameboard) {
     let x = coordinate[0];
     let y = coordinate[1];
-    gameboard.receiveAttack(x, y);
+    return gameboard.receiveAttack(x, y);
   }
 
   randomAttack(gameboard) {
     let x = Math.floor(Math.random() * 10);
     let y = Math.floor(Math.random() * 10);
+    let attackStatus = this.attack([x, y], gameboard);
+    while (!attackStatus) {
+      x = Math.floor(Math.random() * 10);
+      y = Math.floor(Math.random() * 10);
+      attackStatus = this.attack([x, y], gameboard);
+    }
 
-    let attacked = gameboard.receiveAttack(x, y);
-    if (!attacked) this.randomAttack(gameboard);
+    return { attackStatus, coordinate: [x, y] }
   }
 }
 

@@ -1,4 +1,4 @@
-import { player1, player2, player1Board, player2Board, checkWinner, player1PlaceShip, computerPlaceShip, getRandomCoordinate } from "./game-controller";
+import { player1, player2, player1Board, player2Board, checkWinner, player1PlaceShip, computerPlaceShip } from "./game-controller";
 
 const p1BoardDiv = document.querySelector('.player1-board');
 const p2BoardDiv = document.querySelector('.player2-board');

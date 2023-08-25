@@ -19,11 +19,13 @@ const displayBoardGrid = (player) => {
       }
       boardGrid.setAttribute('data-row', x);
       boardGrid.setAttribute('data-col', y);
-      
+
       if (player.name === 'Computer') {
         boardGrid.addEventListener('click', () => {
           attackShipDOM(player1, [x, y]);
-          attackShipDOM(player2);
+          setTimeout(() => {
+            attackShipDOM(player2)
+          }, 500);
         })
       }
 
@@ -74,17 +76,22 @@ const attackShipDOM = (player, coordinate = null) => {
   }
 
   if (checkWinner()) return;
-          
-  let attackStatus;
+
+  let attackStatus, text;
   if (player.name === 'Player 1') {
     attackStatus = player.attack([x, y], attackedBoard);
+    text = 'Computer Turn';
   } else if (player.name === 'Computer') {
     let comAttack = player.randomAttack(attackedBoard);
     attackStatus = comAttack.attackStatus;
     [x, y] = comAttack.coordinate;
+    text = 'Your Turn';
   }
 
   displayAttackedCoordinate(boardDiv, [x, y], attackStatus);
+
+  updateInfoText(text);
+
   let winner = checkWinner();
   if (winner) {
     displayWinner(winner);
@@ -94,13 +101,14 @@ const attackShipDOM = (player, coordinate = null) => {
 }
 
 const displayWinner = (winner) => {
-  if (winner === 'Player') infoText.innerText = 'You Win !';
-  else if (winner === 'Computer') infoText.innerText = 'Computer Win';
+  if (winner === 'Player') updateInfoText('You Win !');
+  else if (winner === 'Computer') updateInfoText('Computer Win');
 }
 
 const startGame = () => {
   p2BoardDiv.classList.remove('pointer-events-none', 'opacity-30');
   startButton.disabled = true;
+  updateInfoText('Your Turn');
 }
 
 const resetGame = () => {
@@ -127,6 +135,10 @@ const showButton = (btn) => {
 
 const disableComputerBoard = () => {
   p2BoardDiv.classList.add('pointer-events-none', 'opacity-30');
+}
+
+const updateInfoText = (text) => {
+  infoText.innerText = text
 }
 
 (function() {

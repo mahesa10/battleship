@@ -102,7 +102,7 @@ const attackShipDOM = (player, coordinate = null) => {
 
 const displayWinner = (winner) => {
   if (winner === 'Player') updateInfoText('You Win !');
-  else if (winner === 'Computer') updateInfoText('Computer Win');
+  else if (winner === 'Computer') updateInfoText('Computer Wins');
 }
 
 const startGame = () => {

@@ -50,6 +50,10 @@ const displayPlayerShip = () => {
 }
 
 const playerPlaceShipDOM = () => {
+  if (p1BoardDiv.classList.contains('pointer-events-none')) {
+    p1BoardDiv.classList.remove('pointer-events-none')
+  }
+
   const boardGrids = p1BoardDiv.querySelectorAll('.board-grid');
   let i = 0;
 
@@ -79,15 +83,17 @@ const playerPlaceShipDOM = () => {
     })
 
     grid.addEventListener('click', (e) => {
+      let x = Number(e.target.dataset.row);
+      let y = Number(e.target.dataset.col);
+      
+      let placeStatus = player1Board.placeShip(player1Ships[i], [x, y])
+      if (!placeStatus) return;
+
       if (i === 4) {
         p1BoardDiv.classList.add('pointer-events-none');
         startButton.disabled = false;
       }
 
-      let x = Number(e.target.dataset.row);
-      let y = Number(e.target.dataset.col);
-      
-      player1Board.placeShip(player1Ships[i], [x, y])
       displayPlayerShip()
       
       i++
@@ -162,7 +168,7 @@ const resetGame = () => {
   p2BoardDiv.innerHTML = '';
   displayBoardGrid(player1);
   displayBoardGrid(player2);
-  // player1PlaceShip();
+  playerPlaceShipDOM();
   displayPlayerShip();
   computerPlaceShip();
   showButton(startButton);

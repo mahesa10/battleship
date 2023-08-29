@@ -4,7 +4,6 @@ import { player1, player2, player1Board, player2Board, computerPlaceShip } from 
 
 displayBoardGrid(player1);
 displayBoardGrid(player2);
-// player1PlaceShip();
 playerPlaceShipDOM()
 displayPlayerShip();
 computerPlaceShip();

@@ -5,12 +5,16 @@ import Ship from "./ship";
 const player1 = new Player('Player 1');
 const player2 = new Player('Computer');
 
-const player1Board = new Gameboard();
-const player2Board = new Gameboard();
+let player1Board = new Gameboard();
+let player2Board = new Gameboard();
 
-const player1Ships = [new Ship('Carrier', 5), new Ship('Battleship', 4), new Ship('Destroyer', 3), new Ship('Submarine', 3), new Ship('Patrol Boat', 2)];
+const createShips = () => {
+  return [new Ship('Carrier', 5), new Ship('Battleship', 4), new Ship('Destroyer', 3), new Ship('Submarine', 3), new Ship('Patrol Boat', 2)]
+}
 
-const player2Ships = [new Ship('Carrier', 5), new Ship('Battleship', 4), new Ship('Destroyer', 3), new Ship('Submarine', 3), new Ship('Patrol Boat', 2)]
+let [player1Ships, player2Ships] = [createShips(), createShips()];
+
+let winner = null;
 
 const getRandomCoordinate = () => {
   let x = Math.floor(Math.random() * 10);
@@ -32,9 +36,21 @@ const computerPlaceShip = () => {
   })
 }
 
-const checkWinner = () => {
-  if (player1Board.isAllShipsSunk()) return 'Computer';
-  else if (player2Board.isAllShipsSunk()) return 'Player';
+const resetGameboards = () => {
+  player1Board = new Gameboard();
+  player2Board = new Gameboard();
+  player1Ships = createShips()
+  player2Ships = createShips()
 }
 
-export { player1, player2, player1Board, player2Board, player1Ships, computerPlaceShip, checkWinner, getRandomCoordinate }
+const resetWinner = () => {
+  winner = null;
+}
+
+const getWinner = () => {
+  if (player1Board.isAllShipsSunk()) winner = 'Computer';
+  else if (player2Board.isAllShipsSunk()) winner = 'Player';
+  return winner;
+}
+
+export { player1, player2, player1Board, player2Board, player1Ships, computerPlaceShip, resetGameboards, getWinner, resetWinner, getRandomCoordinate }

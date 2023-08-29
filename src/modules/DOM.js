@@ -1,4 +1,4 @@
-import { player1, player2, player1Board, player2Board, player1Ships, checkWinner, computerPlaceShip } from "./game-controller";
+import { player1, player2, player1Board, player2Board, player1Ships, getWinner, resetGameboards, resetWinner, computerPlaceShip } from "./game-controller";
 
 const p1BoardDiv = document.querySelector('.player1-board');
 const p2BoardDiv = document.querySelector('.player2-board');
@@ -127,7 +127,7 @@ const attackShipDOM = (player, coordinate = null) => {
     attackedBoard = player1Board;
   }
 
-  if (checkWinner()) return;
+  if (getWinner()) return;
 
   let attackStatus, text;
   if (player.name === 'Player 1') {
@@ -144,7 +144,7 @@ const attackShipDOM = (player, coordinate = null) => {
 
   updateInfoText(text);
 
-  let winner = checkWinner();
+  let winner = getWinner();
   if (winner) {
     displayWinner(winner);
     hideButton(startButton);
@@ -168,12 +168,16 @@ const resetGame = () => {
   p2BoardDiv.innerHTML = '';
   displayBoardGrid(player1);
   displayBoardGrid(player2);
+  resetGameboards();
+  resetWinner();
   playerPlaceShipDOM();
   displayPlayerShip();
   computerPlaceShip();
   showButton(startButton);
   hideButton(resetButton);
   disableComputerBoard();
+  updateInfoText('Place your ships');
+  startButton.disabled = true;
 }
 
 const hideButton = (btn) => {

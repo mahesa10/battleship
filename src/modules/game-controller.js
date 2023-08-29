@@ -12,13 +12,13 @@ const player1Ships = [new Ship('Carrier', 5), new Ship('Battleship', 4), new Shi
 
 const player2Ships = [new Ship('Carrier', 5), new Ship('Battleship', 4), new Ship('Destroyer', 3), new Ship('Submarine', 3), new Ship('Patrol Boat', 2)]
 
-const player1PlaceShip = () => {
-  player1Board.placeShip(player1Ships[0], [2, 3])
-  player1Board.placeShip(player1Ships[1], [3, 2])
-  player1Board.placeShip(player1Ships[2], [0, 1])
-  player1Board.placeShip(player1Ships[3], [7, 5])
-  player1Board.placeShip(player1Ships[4], [8, 3])
-}
+// const player1PlaceShip = () => {
+//   player1Board.placeShip(player1Ships[0], [2, 3])
+//   player1Board.placeShip(player1Ships[1], [3, 2])
+//   player1Board.placeShip(player1Ships[2], [0, 1])
+//   player1Board.placeShip(player1Ships[3], [7, 5])
+//   player1Board.placeShip(player1Ships[4], [8, 3])
+// }
 
 const getRandomCoordinate = () => {
   let x = Math.floor(Math.random() * 10);
@@ -45,4 +45,4 @@ const checkWinner = () => {
   else if (player2Board.isAllShipsSunk()) return 'Player';
 }
 
-export { player1, player2, player1Board, player2Board, player1PlaceShip, computerPlaceShip, checkWinner, getRandomCoordinate }
+export { player1, player2, player1Board, player2Board, player1Ships, computerPlaceShip, checkWinner, getRandomCoordinate }

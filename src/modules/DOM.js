@@ -1,4 +1,4 @@
-import { player1, player2, player1Board, player2Board, checkWinner, player1PlaceShip, computerPlaceShip } from "./game-controller";
+import { player1, player2, player1Board, player2Board, player1Ships, checkWinner, computerPlaceShip } from "./game-controller";
 
 const p1BoardDiv = document.querySelector('.player1-board');
 const p2BoardDiv = document.querySelector('.player2-board');
@@ -13,9 +13,9 @@ const displayBoardGrid = (player) => {
     for (let y = 0; y < 10; y++) {
       const boardGrid = document.createElement('div');
       if (player.name === 'Computer') {
-        boardGrid.className = 'flex justify-center items-center border border-solid border-black hover:bg-sky-200';
+        boardGrid.className = 'board-grid flex justify-center items-center border border-solid border-black hover:bg-sky-200';
       } else {
-        boardGrid.className = 'flex justify-center items-center border border-solid border-black';
+        boardGrid.className = 'board-grid flex justify-center items-center border border-solid border-black';
       }
       boardGrid.setAttribute('data-row', x);
       boardGrid.setAttribute('data-col', y);
@@ -43,10 +43,56 @@ const displayPlayerShip = () => {
     for (let y = 0; y < gameboard.board.length; y++) {
       if (gameboard.board[x][y].shipType !== null) {
         const coordinateDisplay = boardToDisplay.querySelector(`[data-row="${x}"][data-col="${y}"]`)
-        coordinateDisplay.className += ' bg-gray-300'
+        coordinateDisplay.classList.add('bg-gray-300', 'pointer-events-none');
       }
     }
   }
+}
+
+const playerPlaceShipDOM = () => {
+  const boardGrids = p1BoardDiv.querySelectorAll('.board-grid');
+  let i = 0;
+
+  boardGrids.forEach(grid => {
+    grid.addEventListener('mouseover', (e) => {
+      let length = player1Ships[i].length
+      let x = Number(e.target.dataset.row);
+      let y = Number(e.target.dataset.col);
+      let lastHovered = y + length - 1
+      if (lastHovered > 9) {
+        lastHovered = 9
+      }
+
+      while (y <= lastHovered) {
+        const hoveredGrid = p1BoardDiv.querySelector(`[data-row="${x}"][data-col="${y}"]`);
+        hoveredGrid.classList.add('hovered-grid', 'bg-gray-200');
+        y++
+      }
+
+    })
+
+    grid.addEventListener('mouseout', () => {
+      const hoveredGrid = document.querySelectorAll('.hovered-grid')
+      hoveredGrid.forEach(grid => {
+        grid.classList.remove('hovered-grid', 'bg-gray-200')
+      })
+    })
+
+    grid.addEventListener('click', (e) => {
+      if (i === 4) {
+        p1BoardDiv.classList.add('pointer-events-none');
+        startButton.disabled = false;
+      }
+
+      let x = Number(e.target.dataset.row);
+      let y = Number(e.target.dataset.col);
+      
+      player1Board.placeShip(player1Ships[i], [x, y])
+      displayPlayerShip()
+      
+      i++
+    })
+  })
 }
 
 const displayAttackedCoordinate = (boardDiv, coordinate, attackStatus) => {
@@ -116,7 +162,7 @@ const resetGame = () => {
   p2BoardDiv.innerHTML = '';
   displayBoardGrid(player1);
   displayBoardGrid(player2);
-  player1PlaceShip();
+  // player1PlaceShip();
   displayPlayerShip();
   computerPlaceShip();
   showButton(startButton);
@@ -149,4 +195,4 @@ const updateInfoText = (text) => {
   resetButton.addEventListener('click', () => { resetGame() });
 })();
 
-export { displayBoardGrid, displayPlayerShip }
+export { displayBoardGrid, displayPlayerShip, playerPlaceShipDOM }

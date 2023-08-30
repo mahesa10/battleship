@@ -5,6 +5,7 @@ const p2BoardDiv = document.querySelector('.player2-board');
 const infoText = document.querySelector('.info-text');
 const startButton = document.querySelector('.start-button');
 const resetButton = document.querySelector('.reset-button');
+const rotateButton = document.querySelector('.rotate-button');
 
 const displayBoardGrid = (player) => {
   let boardDiv = player.name === 'Player 1'? p1BoardDiv : p2BoardDiv;
@@ -43,7 +44,7 @@ const displayPlayerShip = () => {
     for (let y = 0; y < gameboard.board.length; y++) {
       if (gameboard.board[x][y].shipType !== null) {
         const coordinateDisplay = boardToDisplay.querySelector(`[data-row="${x}"][data-col="${y}"]`)
-        coordinateDisplay.classList.add('bg-gray-300', 'pointer-events-none');
+        coordinateDisplay.classList.add('placed-ship', 'bg-gray-300', 'cursor-not-allowed');
       }
     }
   }
@@ -56,29 +57,50 @@ const playerPlaceShipDOM = () => {
 
   const boardGrids = p1BoardDiv.querySelectorAll('.board-grid');
   let i = 0;
+  let axis = 'x';
+  let forbidden = false;
+
+  rotateButton.addEventListener('click', () => {
+    axis = axis === 'x' ? 'y' : 'x';
+  })
 
   boardGrids.forEach(grid => {
     grid.addEventListener('mouseover', (e) => {
       let length = player1Ships[i].length
       let x = Number(e.target.dataset.row);
       let y = Number(e.target.dataset.col);
-      let lastHovered = y + length - 1
+      let lastHovered = axis === 'x' ? y + length - 1 : x + length - 1;
+
       if (lastHovered > 9) {
         lastHovered = 9
+        p1BoardDiv.classList.add('cursor-not-allowed');
       }
 
-      while (y <= lastHovered) {
-        const hoveredGrid = p1BoardDiv.querySelector(`[data-row="${x}"][data-col="${y}"]`);
-        hoveredGrid.classList.add('hovered-grid', 'bg-gray-200');
-        y++
+      if (axis === 'x') {
+        while (y <= lastHovered) {
+          const hoveredGrid = p1BoardDiv.querySelector(`[data-row="${x}"][data-col="${y}"]`);
+          hoveredGrid.classList.add('hovered-grid', 'bg-gray-200');
+          if (hoveredGrid.classList.contains('placed-ship')) forbidden = true;
+          y++
+        }
+      } else {
+        while (x <= lastHovered) {
+          const hoveredGrid = p1BoardDiv.querySelector(`[data-row="${x}"][data-col="${y}"]`);
+          hoveredGrid.classList.add('hovered-grid', 'bg-gray-200');
+          if (hoveredGrid.classList.contains('placed-ship')) forbidden = true;
+          x++
+        }
       }
 
+      if (forbidden) p1BoardDiv.classList.add('cursor-not-allowed');
     })
 
     grid.addEventListener('mouseout', () => {
       const hoveredGrid = document.querySelectorAll('.hovered-grid')
       hoveredGrid.forEach(grid => {
         grid.classList.remove('hovered-grid', 'bg-gray-200')
+        p1BoardDiv.classList.remove('cursor-not-allowed');
+        forbidden = false;
       })
     })
 
@@ -86,7 +108,7 @@ const playerPlaceShipDOM = () => {
       let x = Number(e.target.dataset.row);
       let y = Number(e.target.dataset.col);
       
-      let placeStatus = player1Board.placeShip(player1Ships[i], [x, y])
+      let placeStatus = player1Board.placeShip(player1Ships[i], [x, y], axis);
       if (!placeStatus) return;
 
       if (i === 4) {
@@ -161,6 +183,7 @@ const startGame = () => {
   p2BoardDiv.classList.remove('pointer-events-none', 'opacity-30');
   startButton.disabled = true;
   updateInfoText('Your Turn');
+  rotateButton.disabled = true;
 }
 
 const resetGame = () => {
@@ -178,6 +201,7 @@ const resetGame = () => {
   disableComputerBoard();
   updateInfoText('Place your ships');
   startButton.disabled = true;
+  rotateButton.disabled = false;
 }
 
 const hideButton = (btn) => {
@@ -197,12 +221,8 @@ const updateInfoText = (text) => {
   infoText.innerText = text
 }
 
-(function() {
-  startButton.addEventListener('click', () => { startGame() });
-})();
+startButton.addEventListener('click', startGame);
 
-(function() {
-  resetButton.addEventListener('click', () => { resetGame() });
-})();
+resetButton.addEventListener('click', resetGame);
 
 export { displayBoardGrid, displayPlayerShip, playerPlaceShipDOM }

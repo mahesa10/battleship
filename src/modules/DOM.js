@@ -14,9 +14,9 @@ const displayBoardGrid = (player) => {
     for (let y = 0; y < 10; y++) {
       const boardGrid = document.createElement('div');
       if (player.name === 'Computer') {
-        boardGrid.className = 'board-grid flex justify-center items-center border border-solid border-black hover:bg-sky-200';
+        boardGrid.className = 'board-grid flex justify-center items-center border-t border-r border-solid border-black hover:bg-sky-200 cursor-pointer';
       } else {
-        boardGrid.className = 'board-grid flex justify-center items-center border border-solid border-black';
+        boardGrid.className = 'board-grid flex justify-center items-center border-t border-r border-solid border-black';
       }
       boardGrid.setAttribute('data-row', x);
       boardGrid.setAttribute('data-col', y);
@@ -44,7 +44,8 @@ const displayPlayerShip = () => {
     for (let y = 0; y < gameboard.board.length; y++) {
       if (gameboard.board[x][y].shipType !== null) {
         const coordinateDisplay = boardToDisplay.querySelector(`[data-row="${x}"][data-col="${y}"]`)
-        coordinateDisplay.classList.add('placed-ship', 'bg-gray-300', 'cursor-not-allowed');
+        coordinateDisplay.classList.add('placed-ship', 'bg-slate-300');
+        boardToDisplay.classList.add('cursor-not-allowed');
       }
     }
   }
@@ -74,32 +75,37 @@ const playerPlaceShipDOM = () => {
       if (lastHovered > 9) {
         lastHovered = 9
         p1BoardDiv.classList.add('cursor-not-allowed');
+        p1BoardDiv.classList.remove('cursor-pointer');
       }
 
       if (axis === 'x') {
         while (y <= lastHovered) {
           const hoveredGrid = p1BoardDiv.querySelector(`[data-row="${x}"][data-col="${y}"]`);
-          hoveredGrid.classList.add('hovered-grid', 'bg-gray-200');
+          hoveredGrid.classList.add('hovered-grid', 'bg-slate-200');
           if (hoveredGrid.classList.contains('placed-ship')) forbidden = true;
           y++
         }
       } else {
         while (x <= lastHovered) {
           const hoveredGrid = p1BoardDiv.querySelector(`[data-row="${x}"][data-col="${y}"]`);
-          hoveredGrid.classList.add('hovered-grid', 'bg-gray-200');
+          hoveredGrid.classList.add('hovered-grid', 'bg-slate-200');
           if (hoveredGrid.classList.contains('placed-ship')) forbidden = true;
           x++
         }
       }
 
-      if (forbidden) p1BoardDiv.classList.add('cursor-not-allowed');
+      if (forbidden) {
+        p1BoardDiv.classList.add('cursor-not-allowed');
+        p1BoardDiv.classList.remove('cursor-pointer')
+      };
     })
 
     grid.addEventListener('mouseout', () => {
       const hoveredGrid = document.querySelectorAll('.hovered-grid')
       hoveredGrid.forEach(grid => {
-        grid.classList.remove('hovered-grid', 'bg-gray-200')
+        grid.classList.remove('hovered-grid', 'bg-slate-200')
         p1BoardDiv.classList.remove('cursor-not-allowed');
+        p1BoardDiv.classList.add('cursor-pointer');
         forbidden = false;
       })
     })
@@ -114,6 +120,7 @@ const playerPlaceShipDOM = () => {
       if (i === 4) {
         p1BoardDiv.classList.add('pointer-events-none');
         startButton.disabled = false;
+        updateInfoText('Start the Game')
       }
 
       displayPlayerShip()
@@ -132,9 +139,11 @@ const displayAttackedCoordinate = (boardDiv, coordinate, attackStatus) => {
 
   if (attackStatus === 'hit'){
     coordinateDiv.classList.add('bg-red-400')
+    coordinateDiv.classList.remove('bg-slate-300')
   }
 
   coordinateDiv.classList.add('pointer-events-none')
+  coordinateDiv.classList.remove('cursor-pointer')
 }
 
 const attackShipDOM = (player, coordinate = null) => {

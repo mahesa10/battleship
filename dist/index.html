@@ -2,44 +2,44 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta  name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Battleship | mahesa10</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div id="wrapper" class="h-screen flex flex-col">
+  <div id="wrapper" class="h-screen w-screen flex flex-col font-inter">
     <h1 class="text-7xl text-center my-7 font-oswald font-bold">BATTLESHIP</h1>
 
-    <div class="flex m-auto border border-solid border-black py-3 px-5">
+    <div class="flex m-auto bg-slate-100 py-3 px-5 w-72 justify-center rounded-md">
       <h2 class="info-text text-2xl">Place your ships</h2>
     </div>
 
     <div class="main-container flex flex-row justify-center flex-grow items-center gap-11">
       <div class="player-container flex flex-col items-center gap-3">
-        <div class="board player1-board grid grid-cols-10 grid-rows-10  h-72 w-72 border border-solid border-black"></div>
+        <div class="board player1-board grid grid-cols-10 grid-rows-10 h-72 w-72 border-l border-b border-solid border-black cursor-pointer"></div>
         <p class="text-xl">Your Board</p>
       </div>
 
       <div class="buttons flex flex-col gap-5">
-        <button class="flex gap-2 items-center rotate-button px-4 py-2 border border-solid border-black hover:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none">
+        <button class="flex gap-2 items-center rotate-button px-4 py-2 border border-solid border-black hover:bg-gray-200 active:bg-gray-300 disabled:opacity-50 disabled:pointer-events-none rounded-md">
           <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
           </svg> Rotate ship
         </button>
-        <button class="start-button px-4 py-2 border border-solid border-black hover:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none" disabled>START GAME</button>
-        <button class="reset-button px-4 py-2 border border-solid border-black hover:bg-gray-200 hidden">RESET GAME</button>
+        <button class="start-button px-4 py-2 border border-solid border-black hover:bg-gray-200 active:bg-gray-300 disabled:opacity-50 disabled:pointer-events-none rounded-md" disabled>START GAME</button>
+        <button class="reset-button px-4 py-2 border border-solid border-black hover:bg-gray-200 active:bg-gray-300 hidden rounded-md">RESET GAME</button>
       </div>
 
       <div class="player-container flex flex-col items-center gap-3">
-        <div class="board player2-board grid grid-cols-10 grid-rows-10 h-72 w-72 border border-solid border-black pointer-events-none opacity-30"></div>
+        <div class="board player2-board grid grid-cols-10 grid-rows-10 h-72 w-72 border-l border-b border-solid border-black pointer-events-none opacity-30"></div>
         <p class="text-xl">Computer Board</p>
       </div>
     </div>
 
-    <div class="footer bg-gray-400 h-14 flex items-center justify-center">
-      <p class="text-lg">Coded by: mahesa10</p>
+    <div class="footer bg-slate-200 h-11 flex justify-center items-center">
+      <p>&copy; <a href="https://github.com/mahesa10" target="_blank" class="underline">mahesa10</a></p>
     </div>
   </div>
   <script src="bundle.js"></script>
